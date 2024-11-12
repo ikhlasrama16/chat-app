@@ -1,7 +1,7 @@
-const express = require('express');
-const path = require('path')
+const express = require('express')
 const app = express();
 const PORT = 4000;
-const server = app.listen(PORT, () => console.log(`server is running on port ${PORT}`));
+const path = require('path');
+const server = app.listen(PORT, ()=> console.log(`🗨️ server running on port http://localhost:${PORT}`));
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
