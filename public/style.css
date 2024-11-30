@@ -55,10 +55,10 @@ body{
     display: flex;
     flex-direction: column;
     background-color: #fdfdf4;
-    width: 435px;
+    width: 450px;
     height: 600px;
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: auto;
     align-items: center;
 }
 
