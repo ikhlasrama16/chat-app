@@ -37,8 +37,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build the app
-        run: npm run build # Sesuaikan jika Anda memiliki script build
+      - name: start the app
+        run: npm run start # Sesuaikan jika Anda memiliki script build
 
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
