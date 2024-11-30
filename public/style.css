@@ -96,7 +96,7 @@ body{
 }
 
 .message-feedback{
-    overflow: hidden;
+    list-style-type: none;
 }
 
 .feedback{

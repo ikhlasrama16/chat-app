@@ -7,6 +7,8 @@ const nameInput = document.getElementById('name-input');
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
 
+const messageTone = new Audio('/web_whatsapp.mp3') 
+
 messageForm.addEventListener('submit', (e) => {
     e.preventDefault()
     sendMessage()
@@ -17,6 +19,7 @@ socket.on('clients-total', (data) =>{
 })
 
 function sendMessage(){
+    clearFeedback()
     if(messageInput.value === "") return
     // console.log(messageInput.value)
     const data = {
@@ -31,6 +34,7 @@ function sendMessage(){
 }
 
 socket.on('chat-message', (data) =>{
+    messageTone.play()
     // console.log(data)
     addMessagetoUi(false, data)
 })
@@ -51,4 +55,41 @@ function addMessagetoUi(isOwnMessage, data) {
 
 function scrollToBottom(){
     messageContainer.scrollTo(0, messageContainer.scrollHeight)
+}
+
+messageInput.addEventListener('focus', (e) =>{
+    socket.emit('feedback', {
+        feedback: `${nameInput.value} is typing 🖋️`
+    })
+})
+
+messageInput.addEventListener('keypress', (e) => {
+    socket.emit('feedback', {
+        feedback: `${nameInput.value} is typing 🖋️`
+    } )
+})
+
+messageInput.addEventListener('blur', (e) => {
+    socket.emit('feedback', {
+        feedback: '',
+    })
+})
+
+socket.on('feedback', (data) => {
+    clearFeedback()
+    const element = `
+        <li class="message-feedback">
+            <p class="feedback" id="feedback">
+                ${data.feedback}
+            </p>
+        </li>
+    `
+    messageContainer.innerHTML += element
+    scrollToBottom()
+})
+
+function clearFeedback(){
+    document.querySelectorAll('li.message-feedback').forEach(element => {
+        element.parentNode.removeChild(element)
+    })
 }
